@@ -123,6 +123,43 @@
       loadCSVData('sample2.csv', 'sample2-table');
       loadCSVData('sample3.csv', 'sample3-table');
     }, 5000);
+
+    function loadCSVData(csvPath, tableId) {
+  // 캐시를 방지하기 위해 현재 시간 기반의 쿼리 스트링 추가
+  const url = csvPath + '?t=' + new Date().getTime();
+  fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('네트워크 응답에 문제가 있습니다: ' + response.statusText);
+      }
+      return response.text();
+    })
+    .then(data => {
+      // CSV 데이터를 행별로 분리
+      const rows = data.trim().split(/\r?\n/);
+      const table = document.getElementById(tableId);
+      const tbody = table.querySelector('tbody');
+      let bodyHTML = '';
+      for (let i = 0; i < rows.length; i++) {
+        if (rows[i].trim() === '') continue;
+        const cols = rows[i].split(',');
+        if (i === 2) {
+          bodyHTML += '<tr class="third-row">';
+        } else {
+          bodyHTML += '<tr>';
+        }
+        cols.forEach(col => {
+          bodyHTML += '<td>' + col.trim() + '</td>';
+        });
+        bodyHTML += '</tr>';
+      }
+      tbody.innerHTML = bodyHTML;
+    })
+    .catch(error => {
+      console.error('CSV 불러오기 오류:', error);
+    });
+}
+
   </script>
 </body>
 </html>
