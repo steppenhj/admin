@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Excel CSV 데이터 연동 예제</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+    .table-container {
+      margin-bottom: 40px;
+      background: #fff;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .csv-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table th, table td {
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    table th {
+      background: #f9f9f9;
+    }
+    table tr:nth-child(even) {
+      background: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>CSV 형식 테스트 파일</h1>
+  <!-- Sample1 데이터 -->
+  <div class="table-container" id="sample1-container">
+    <div class="csv-title">Sample 1</div>
+    <table id="sample1-table">
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- Sample2 데이터 -->
+  <div class="table-container" id="sample2-container">
+    <div class="csv-title">Sample 2</div>
+    <table id="sample2-table">
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- Sample3 데이터 -->
+  <div class="table-container" id="sample3-container">
+    <div class="csv-title">Sample 3</div>
+    <table id="sample3-table">
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    /**
+     * CSV 파일을 불러와 파싱한 후, 지정된 테이블에 데이터를 출력하는 함수.
+     * @param {string} csvPath - CSV 파일의 경로 (예: "sample1.csv")
+     * @param {string} tableId - 데이터를 출력할 테이블의 id (예: "sample1-table")
+     */
+    function loadCSVData(csvPath, tableId) {
+      fetch(csvPath)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('네트워크 응답에 문제가 있습니다: ' + response.statusText);
+          }
+          return response.text();
+        })
+        .then(data => {
+          // CSV 데이터를 행별로 분리 (Windows의 경우 "\r\n"일 수 있음)
+          const rows = data.trim().split(/\r?\n/);
+          const table = document.getElementById(tableId);
+          const thead = table.querySelector('thead');
+          const tbody = table.querySelector('tbody');
+
+          // 첫 번째 행을 헤더로 사용
+          const headers = rows[0].split(',');
+          let headerHTML = '<tr>';
+          headers.forEach(header => {
+            headerHTML += '<th>' + header.trim() + '</th>';
+          });
+          headerHTML += '</tr>';
+          thead.innerHTML = headerHTML;
+
+          // 나머지 행은 데이터로 처리
+          let bodyHTML = '';
+          for (let i = 1; i < rows.length; i++) {
+            // 빈 줄 무시
+            if (rows[i].trim() === '') continue;
+            const cols = rows[i].split(',');
+            bodyHTML += '<tr>';
+            cols.forEach(col => {
+              bodyHTML += '<td>' + col.trim() + '</td>';
+            });
+            bodyHTML += '</tr>';
+          }
+          tbody.innerHTML = bodyHTML;
+        })
+        .catch(error => {
+          console.error('CSV 불러오기 오류:', error);
+        });
+    }
+
+    // 각 CSV 파일에 대해 함수 호출 (CSV 파일들은 HTML 파일과 같은 폴더에 있어야 합니다)
+    loadCSVData('sample1.csv', 'sample1-table');
+    loadCSVData('sample2.csv', 'sample2-table');
+    loadCSVData('sample3.csv', 'sample3-table');
+
+    // 5초(5000ms)마다 CSV 파일을 재요청
+setInterval(() => {
+  loadCSVData('sample1.csv', 'sample1-table');
+  loadCSVData('sample2.csv', 'sample2-table');
+  loadCSVData('sample3.csv', 'sample3-table');
+}, 5000);
+
+  </script>
+</body>
+</html>
