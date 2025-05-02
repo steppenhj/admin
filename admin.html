@@ -42,6 +42,7 @@
       color: #fff;
       text-decoration: none;
       border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.9rem;
     }
     .sidebar nav a.active,
     .sidebar nav a:hover {
@@ -63,10 +64,14 @@
       display: block;
     }
     /* Tables & Forms */
+    .table-wrapper {
+      overflow-x: auto;
+      margin-bottom: 1rem;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 1rem;
+      min-width: 600px;
     }
     th, td {
       padding: 0.5rem;
@@ -110,6 +115,40 @@
     .btn.primary { background: var(--primary-color); color: #fff; }
     .btn.secondary { background: #fff; color: var(--primary-color); border: 1px solid var(--primary-color); }
     .btn.small { padding: 0.25rem 0.5rem; font-size: 0.8rem; }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+      }
+      .sidebar nav {
+        display: flex;
+      }
+      .sidebar nav a {
+        flex: 1;
+        text-align: center;
+        border-bottom: none;
+        border-right: 1px solid rgba(255,255,255,0.2);
+      }
+      .sidebar nav a:last-child {
+        border-right: none;
+      }
+      .content {
+        padding: 1rem;
+      }
+      form, .table-wrapper {
+        margin: 0 -0.5rem 1rem;
+        padding: 0 0.5rem;
+      }
+      table {
+        min-width: unset;
+      }
+    }
   </style>
 </head>
 <body>
@@ -123,7 +162,6 @@
       <a href="#" data-section="withdrawals">출금 요청</a>
       <a href="#" data-section="inquiries">고객 문의</a>
       <a href="#" data-section="notices">공지사항</a>
-      <a href="#" data-section="logout">로그아웃</a>
     </nav>
   </div>
 
@@ -161,19 +199,21 @@
         </div>
         <button type="submit" class="btn primary">유저 등록</button>
       </form>
-      <table>
-        <thead>
-          <tr><th>이메일</th><th>등급</th><th>계좌</th><th>가입일</th></tr>
-        </thead>
-        <tbody id="userList">
-          <!-- JS로 채움 -->
-        </tbody>
-      </table>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>이메일</th><th>등급</th><th>계좌</th><th>가입일</th></tr>
+          </thead>
+          <tbody id="userList">
+            <!-- JS로 채움 -->
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <!-- Points -->
     <section id="points" class="section">
-      <h1>포인트 지급</n1>
+      <h1>포인트 지급</h1>
       <form id="pointForm">
         <div class="form-group">
           <label>유저 이메일</label>
@@ -194,40 +234,46 @@
     <!-- Tiers -->
     <section id="tiers" class="section">
       <h1>등급 관리</h1>
-      <table>
-        <thead>
-          <tr><th>유저</th><th>현재 등급</th><th>변경</th></tr>
-        </thead>
-        <tbody id="tierList">
-          <!-- JS로 채움 -->
-        </tbody>
-      </table>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>유저</th><th>현재 등급</th><th>변경</th></tr>
+          </thead>
+          <tbody id="tierList">
+            <!-- JS로 채움 -->
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <!-- Withdrawals -->
     <section id="withdrawals" class="section">
       <h1>출금 요청</h1>
-      <table>
-        <thead>
-          <tr><th>유저</th><th>금액</th><th>상태</th><th>액션</th></tr>
-        </thead>
-        <tbody id="withdrawList">
-          <!-- JS로 채움 -->
-        </tbody>
-      </table>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>유저</th><th>금액</th><th>상태</th><th>액션</th></tr>
+          </thead>
+          <tbody id="withdrawList">
+            <!-- JS로 채움 -->
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <!-- Inquiries -->
     <section id="inquiries" class="section">
       <h1>고객 문의</h1>
-      <table>
-        <thead>
-          <tr><th>유저</th><th>제목</th><th>내용</th><th>답변</th></tr>
-        </thead>
-        <tbody id="inquiryList">
-          <!-- JS로 채움 -->
-        </tbody>
-      </table>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>유저</th><th>제목</th><th>내용</th><th>답변</th></tr>
+          </thead>
+          <tbody id="inquiryList">
+            <!-- JS로 채움 -->
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <!-- Notices -->
@@ -244,20 +290,16 @@
         </div>
         <button type="submit" class="btn primary">등록하기</button>
       </form>
-      <table>
-        <thead>
-          <tr><th>제목</th><th>등록일</th></tr>
-        </thead>
-        <tbody id="noticeList">
-          <!-- JS로 채움 -->
-        </tbody>
-      </table>
-    </section>
-
-    <!-- Logout Placeholder -->
-    <section id="logout" class="section">
-      <h1>로그아웃</h1>
-      <button id="logoutBtn" class="btn secondary">로그아웃</button>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>제목</th><th>등록일</th></tr>
+          </thead>
+          <tbody id="noticeList">
+            <!-- JS로 채움 -->
+          </tbody>
+        </table>
+      </div>
     </section>
   </main>
 
@@ -293,13 +335,6 @@
       alert('새 유저가 등록되었습니다.');
       e.target.reset();
     });
-
-    // 로그아웃
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      alert('로그아웃 처리됩니다.');
-      window.location.href = 'https://steppenhj.github.io/sample/index.html';
-    });
-
   </script>
 </body>
 </html>
