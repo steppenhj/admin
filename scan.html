@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR 인식 | 학교 식당 예약 시스템</title>
+  <style>
+    :root { --bg:#f9f9f9; --card-bg:#fff; --text:#333; --accent:#4CAF50; --border:#ccc; }
+    body { font-family:'Segoe UI', Tahoma, sans-serif; background:var(--bg); color:var(--text); margin:0; padding:0; }
+    .header { display:flex; justify-content:space-between; align-items:center; padding:10px 20px; background:var(--card-bg); border-bottom:1px solid var(--border); }
+    .header a { text-decoration:none; color:var(--accent); font-weight:bold; }
+    .container { padding:20px; text-align:center; }
+    #reader { width:100%; max-width:400px; margin:auto; }
+    .result { margin-top:20px; padding:10px; background:var(--card-bg); border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); text-align:left; }
+    .result p { margin:5px 0; }
+    button { margin-top:20px; padding:10px 20px; background:var(--accent); color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:16px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <a href="index.html">예약 페이지</a>
+    <h2>QR 인식</h2>
+    <a href="login.html">로그인</a>
+  </div>
+  <div class="container">
+    <div id="reader"></div>
+    <div class="result" id="result" style="display:none;">
+      <h3>예약 정보</h3>
+      <p><strong>날짜:</strong> <span id="res-date"></span></p>
+      <p><strong>시간대:</strong> <span id="res-timeslot"></span></p>
+      <p><strong>메뉴:</strong> <span id="res-menu"></span></p>
+      <button id="restart">다시 스캔</button>
+    </div>
+  </div>
+
+  <!-- html5-qrcode 라이브러리 -->
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <script>
+    const resultDiv = document.getElementById('result');
+    const resDate = document.getElementById('res-date');
+    const resTimeslot = document.getElementById('res-timeslot');
+    const resMenu = document.getElementById('res-menu');
+    const restartBtn = document.getElementById('restart');
+
+    function onScanSuccess(decodedText, decodedResult) {
+      // QR 텍스트 형식: YYYY-MM-DD|시간대|메뉴
+      const parts = decodedText.split('|');
+      if (parts.length === 3) {
+        resDate.textContent = parts[0];
+        resTimeslot.textContent = parts[1];
+        resMenu.textContent = parts[2];
+        html5QrcodeScanner.clear().then(_ => {
+          document.getElementById('reader').style.display = 'none';
+          resultDiv.style.display = 'block';
+        });
+      }
+    }
+
+    var html5QrcodeScanner = new Html5QrcodeScanner(
+      'reader', { fps: 10, qrbox: 250 }
+    );
+    html5QrcodeScanner.render(onScanSuccess);
+
+    restartBtn.addEventListener('click', () => {
+      resultDiv.style.display = 'none';
+      document.getElementById('reader').style.display = 'block';
+      html5QrcodeScanner.render(onScanSuccess);
+    });
+  </script>
+</body>
+</html>
