@@ -11,8 +11,7 @@
     .header a { text-decoration:none; color:var(--accent); font-weight:bold; }
     .container { padding:20px; text-align:center; }
     #reader { width:100%; max-width:400px; margin:auto; }
-    .result { margin-top:20px; padding:10px; background:var(--card-bg); border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); text-align:left; }
-    .result p { margin:5px 0; }
+    .result { margin-top:20px; padding:20px; background:var(--card-bg); border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); text-align:center; font-size:18px; font-weight:bold; }
     button { margin-top:20px; padding:10px 20px; background:var(--accent); color:#fff; border:none; border-radius:4px; cursor:pointer; font-size:16px; }
   </style>
 </head>
@@ -25,11 +24,7 @@
   <div class="container">
     <div id="reader"></div>
     <div class="result" id="result" style="display:none;">
-      <h3>예약 정보</h3>
-      <p><strong>날짜:</strong> <span id="res-date"></span></p>
-      <p><strong>시간대:</strong> <span id="res-timeslot"></span></p>
-      <p><strong>메뉴:</strong> <span id="res-menu"></span></p>
-      <button id="restart">다시 스캔</button>
+      입장 완료!
     </div>
   </div>
 
@@ -37,35 +32,25 @@
   <script src="https://unpkg.com/html5-qrcode"></script>
   <script>
     const resultDiv = document.getElementById('result');
-    const resDate = document.getElementById('res-date');
-    const resTimeslot = document.getElementById('res-timeslot');
-    const resMenu = document.getElementById('res-menu');
-    const restartBtn = document.getElementById('restart');
+    const readerDiv = document.getElementById('reader');
 
     function onScanSuccess(decodedText, decodedResult) {
-      // QR 텍스트 형식: YYYY-MM-DD|시간대|메뉴
-      const parts = decodedText.split('|');
-      if (parts.length === 3) {
-        resDate.textContent = parts[0];
-        resTimeslot.textContent = parts[1];
-        resMenu.textContent = parts[2];
-        html5QrcodeScanner.clear().then(_ => {
-          document.getElementById('reader').style.display = 'none';
-          resultDiv.style.display = 'block';
-        });
-      }
+      html5QrcodeScanner.clear().then(_ => {
+        readerDiv.style.display = 'none';
+        resultDiv.style.display = 'block';
+        // 2초 후 다시 스캔 모드로 전환
+        setTimeout(() => {
+          resultDiv.style.display = 'none';
+          readerDiv.style.display = 'block';
+          html5QrcodeScanner.render(onScanSuccess);
+        }, 2000);
+      });
     }
 
-    var html5QrcodeScanner = new Html5QrcodeScanner(
+    const html5QrcodeScanner = new Html5QrcodeScanner(
       'reader', { fps: 10, qrbox: 250 }
     );
     html5QrcodeScanner.render(onScanSuccess);
-
-    restartBtn.addEventListener('click', () => {
-      resultDiv.style.display = 'none';
-      document.getElementById('reader').style.display = 'block';
-      html5QrcodeScanner.render(onScanSuccess);
-    });
   </script>
 </body>
 </html>
