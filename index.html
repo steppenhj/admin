@@ -2,314 +2,262 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>학교 식당 예약 시스템</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>로또 번호 추천 서비스 개발 제안서</title>
+  <meta name="description" content="실제 1등 당첨자 기반 로또 번호 추천 유료 서비스 개발 및 마케팅, 4주 완성 프로젝트 일정 및 맞춤 제안">
+  <link href="https://fonts.googleapis.com/css?family=Pretendard:400,700&display=swap" rel="stylesheet">
   <style>
-    /* Variables */
     :root {
-      --bg: #f9f9f9;
-      --card-bg: #ffffff;
-      --text: #333333;
-      --accent: #4caf50;
-      --border: #dddddd;
-      --radius: 8px;
-      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      --gap: 16px;
-      --transition: 0.3s;
-    }
-    /* Global reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      --navy: #1b2236;
+      --gold: #f6c452;
+      --gold-deep: #e5ac00;
+      --white: #fff;
+      --ivory: #f7f6f2;
+      --gray: #7b7c82;
+      --bluegray: #2a3043;
+      --brandred: #e94b4b;
     }
     body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-    }
-    a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-    /* Layout */
-    .layout {
-      display: flex;
-      gap: var(--gap);
-      padding: var(--gap);
-      align-items: start;
-    }
-    /* Sidebar / Calendar */
-    .sidebar {
-      flex: 0 0 220px;
-    }
-    .calendar {
-      background: var(--card-bg);
-      padding: var(--gap);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .cal-header {
-      text-align: center;
-      font-weight: bold;
-      margin-bottom: var(--gap);
-      font-size: 1rem;
-    }
-    .calendar table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .calendar th,
-    .calendar td {
-      width: 14.285%;
-      text-align: center;
-      padding: 4px 0;
-      font-size: 0.875rem;
-      transition: background var(--transition);
-    }
-    .calendar th {
-      color: var(--accent);
-    }
-    .calendar .today {
-      background: var(--accent);
-      color: #ffffff;
-      border-radius: 50%;
-    }
-    /* Main content */
-    .content {
-      flex: 1;
-    }
-    #authLink {
-      position: fixed;
-      top: var(--gap);
-      right: var(--gap);
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 4px 8px;
-      font-size: 0.875rem;
-      transition: background var(--transition);
-    }
-    #authLink:hover {
-      background: var(--accent);
-      color: #fff;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: var(--gap);
-      font-size: 1.5rem;
+      font-family: 'Pretendard', 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
+      background: linear-gradient(135deg, var(--ivory) 0%, var(--white) 100%);
+      margin: 0;
+      color: var(--navy);
     }
     .container {
-      max-width: 400px;
+      max-width: 760px;
       margin: 0 auto;
-      background: var(--card-bg);
-      padding: var(--gap);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      transition: transform var(--transition);
+      background: var(--white);
+      box-shadow: 0 6px 32px 0 rgba(27,34,54,0.13);
+      border-radius: 24px;
+      margin-top: 44px;
+      margin-bottom: 40px;
+      padding: 38px 30px 46px 30px;
+      border: 2px solid var(--gold);
     }
-    .container:hover {
-      transform: translateY(-4px);
+    h1 {
+      font-size: 2.3rem;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+      text-align: center;
     }
-    label {
-      display: block;
-      margin-top: var(--gap);
-      font-weight: bold;
-      font-size: 0.9rem;
+    .subtitle {
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--gold-deep);
+      text-align: center;
+      margin-bottom: 27px;
+      letter-spacing: -0.2px;
     }
-    input[type="date"],
-    select,
-    button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 8px;
-      font-size: 1rem;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: #fafafa;
-      color: var(--text);
-      transition: border-color var(--transition);
-    }
-    select:focus,
-    input[type="date"]:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-    button {
-      cursor: pointer;
-      background: var(--accent);
-      color: #ffffff;
+    hr {
       border: none;
-      margin-top: var(--gap);
-      font-weight: bold;
+      border-bottom: 1.7px solid var(--gold);
+      margin: 34px 0 26px 0;
     }
-    button:hover {
-      opacity: 0.9;
+    section {
+      margin-bottom: 38px;
     }
-    button:disabled {
-      background: #cccccc;
-      cursor: not-allowed;
+    h2 {
+      color: var(--gold-deep);
+      font-size: 1.29rem;
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
     }
-    .info {
-      margin-top: 8px;
-      font-size: 0.85rem;
-      color: #666666;
+    ul, ol {
+      padding-left: 1.18em;
+      line-height: 1.75;
+    }
+    li {
+      margin-bottom: 7px;
+    }
+    .keybox {
+      background: linear-gradient(90deg, #f9e5bc 0%, #f7d389 100%);
+      border-left: 6px solid var(--gold);
+      padding: 17px 20px;
+      border-radius: 10px;
+      margin-bottom: 23px;
+      font-size: 1.05rem;
+      color: var(--navy);
+      font-weight: 500;
+      box-shadow: 0 3px 12px 0 rgba(230,180,44,0.07);
+    }
+    .plan-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 10px;
+    }
+    .plan-table th, .plan-table td {
+      border: 1px solid #ece6d7;
+      padding: 12px 7px;
       text-align: left;
+      font-size: 1.04rem;
     }
-    #qrcode {
-      margin-top: var(--gap);
+    .plan-table th {
+      background: #fdf5e2;
+      color: var(--bluegray);
+      font-weight: 700;
+    }
+    .brand-logo {
       display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 26px;
       justify-content: center;
     }
-    /* Responsive mobile styling */
-    @media (max-width: 768px) {
-      .layout {
-        flex-direction: column;
-        padding: 12px;
-      }
-      .sidebar {
-        width: 100%;
-      }
-      .calendar {
-        margin-bottom: var(--gap);
-      }
-      h1 {
-        font-size: 1.25rem;
-      }
-      .container {
-        padding: 12px;
-        box-shadow: none;
-      }
-      input[type="date"],
-      select,
-      button {
-        font-size: 0.95rem;
-      }
-      .cal-header {
-        font-size: 0.95rem;
-      }
+    .brand-logo img {
+      width: 52px; height: 52px; border-radius: 14px; border: 2.2px solid var(--gold);
+      background: #fffef6;
+      box-shadow: 0 3px 13px 0 rgba(210,160,40,0.10);
+    }
+    .brand-logo .brand-title {
+      font-size: 1.22rem;
+      color: var(--gold-deep);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .contact {
+      font-size: 1.09rem;
+      color: var(--bluegray);
+      margin-top: 19px;
+      text-align: center;
+    }
+    .footer {
+      font-size: 0.97rem;
+      color: #c5c5c5;
+      margin-top: 37px;
+      text-align: center;
+    }
+    a {
+      color: var(--navy);
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+    a:hover {
+      color: var(--gold-deep);
+    }
+    @media (max-width: 620px) {
+      .container {padding: 8vw 3vw 11vw 3vw; margin-top: 4vw;}
+      h1 {font-size: 1.22rem;}
+      .plan-table th, .plan-table td {font-size: 0.97rem;}
     }
   </style>
 </head>
 <body>
-  <div class="layout">
-    <aside class="sidebar">
-      <div class="calendar" id="calendar"></div>
-    </aside>
-    <main class="content">
-      <a id="authLink" href="login.html">로그인/회원가입</a>
-      <h1>학교 식당 예약 시스템</h1>
-      <div class="container">
-        <label for="date">날짜 (오늘만 선택 가능):</label>
-        <input type="date" id="date" disabled />
-        <p class="info">
-          ※ 예약 시간 30분 안에 오지 않으면 예약이 취소됩니다.
-        </p>
-        <label for="timeslot">시간대 선택:</label>
-        <select id="timeslot">
-          <option value="11:00~11:30">11:00~11:30</option>
-          <option value="11:30~12:00">11:30~12:00</option>
-          <option value="12:00~12:30">12:00~12:30</option>
-          <option value="12:30~13:00">12:30~13:00</option>
-        </select>
-        <div class="info" id="menuStock"></div>
-        <label for="menu">메뉴 선택:</label>
-        <select id="menu">
-          <option value="비빔밥">비빔밥</option>
-          <option value="된장찌개">된장찌개</option>
-          <option value="카레라이스">카레라이스</option>
-        </select>
-        <button id="payBtn">테스트 결제 및 예약</button>
-        <div id="qrcode"></div>
+  <div class="container">
+
+    <div class="brand-logo">
+      <!-- 실제 로고가 있으면 아래 img src에 파일 경로 넣으세요 -->
+      <img src="https://cdn-icons-png.flaticon.com/512/9057/9057689.png" alt="로고">
+      <div class="brand-title">로또 1등 당첨자 추천 플랫폼</div>
+    </div>
+
+    <h1>로또 번호 추천 서비스 개발 제안서</h1>
+    <div class="subtitle">
+      실제 1등 당첨자 기반, 신뢰의 유료 추천 서비스<br>
+      4주 완성 개발 플랜 & 맞춤 제안
+    </div>
+
+    <hr />
+
+    <section>
+      <h2>사업 개요 및 차별화</h2>
+      <div class="keybox">
+        <b>실제 1등 당첨자</b>가 직접 운영하는 국내 최초<br>
+        신뢰 기반 유료 로또 번호 추천 서비스!<br>
+        <br>
+        <b>데이터 분석 + 감성 마케팅 + 스토리텔링</b>을 결합하여<br>
+        단순한 추천을 넘어, 고객에게 희망과 실질적 신뢰를 전달합니다.
       </div>
-    </main>
+      <ul>
+        <li>1등 당첨 경험과 번호 조합 노하우 반영</li>
+        <li>고객 감성을 자극하는 실제 스토리 기반 콘텐츠</li>
+        <li>정확한 데이터 관리 및 맞춤형 후기/마케팅 연계</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>핵심 제공 서비스</h2>
+      <ul>
+        <li><b>회원가입 없는 간편결제</b> – 40~60대도 직관적 사용</li>
+        <li><b>추천 번호 지급/관리</b> – 자동/수동, 문자 발송 포함</li>
+        <li><b>당첨 확인 시스템</b> – 추천번호 vs 실제 당첨번호 자동 비교, 관리자·고객 모두 즉시 확인</li>
+        <li><b>인터뷰 등 당첨자 마케팅 활용 프로세스</b></li>
+        <li><b>메인 1등 인증 섹션</b> – 방문자 신뢰 확보</li>
+        <li><b>유료 멤버십(월 정액/단건)</b> – 구독 기반, 자동 결제 지원</li>
+        <li><b>모바일/PC 반응형, SEO 최적화, 후기·공지·고객센터(채팅형)</b></li>
+        <li><b>로고/브랜딩, 썸네일, 영상 등 마케팅 콘텐츠 포함</b></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4주 개발 및 디자인 일정</h2>
+      <table class="plan-table">
+        <tr>
+          <th>주차</th>
+          <th>주요 내용</th>
+        </tr>
+        <tr>
+          <td>1주차<br><span style="font-weight:normal;">(기획&설계)</span></td>
+          <td>
+            - 요구사항/기획 최종 확정 및 DB설계<br>
+            - 번호 지급 방식/유료 멤버십 구조 논의<br>
+            - <b>로고/디자인 시안 초안 제작</b><br>
+            - 도메인, 호스팅, 결제 연동 준비
+          </td>
+        </tr>
+        <tr>
+          <td>2주차<br><span style="font-weight:normal;">(핵심 기능 I)</span></td>
+          <td>
+            - 메인/추천번호/결제 연동 개발<br>
+            - 추천번호 추출·문자발송 기능<br>
+            - <b>로고 디자인 확정</b><br>
+            - 관리자 페이지, 회원관리/번호관리 기본 구축
+          </td>
+        </tr>
+        <tr>
+          <td>3주차<br><span style="font-weight:normal;">(핵심 기능 II & 테스트)</span></td>
+          <td>
+            - 마이페이지, 후기·공지·고객센터 구현<br>
+            - 당첨 자동 확인/알림 시스템 완성<br>
+            - 모바일/SEO 최적화, 통합테스트
+          </td>
+        </tr>
+        <tr>
+          <td>4주차<br><span style="font-weight:normal;">(최종 점검&오픈)</span></td>
+          <td>
+            - 메인 1등 인증 섹션 및 디자인 보완<br>
+            - 유튜브 쇼츠/마케팅 콘텐츠 제작<br>
+            - 운영자 매뉴얼 전달, 오픈 준비<br>
+            - 서비스 정식 오픈
+          </td>
+        </tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>서비스/시스템 강점</h2>
+      <ul>
+        <li>실제 1등 당첨자 인증 – <b>메인 노출</b>로 신뢰 강화</li>
+        <li>간편결제/회원가입 없는 UX, 중장년층 최적화 UI</li>
+        <li>당첨자 자동 감지·관리·마케팅 연계까지 올인원 시스템</li>
+        <li>모든 소스, 로고, 영상 등 <b>100% 원본 제공</b></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>문의 및 연락처</h2>
+      <div class="contact">
+        <b>PM / 개발자: 박해진</b><br>
+        Email: <a href="mailto:hermann8hesse@gmail.com">hermann8hesse@gmail.com</a>
+      </div>
+    </section>
+
+    <div class="footer">
+      &copy; 2025. 로또 번호 추천 서비스 제안서 by 박해진. All rights reserved.
+    </div>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <script src="https://js.tosspayments.com/v1"></script>
-  <script>
-    // 달력 렌더링
-    function renderCalendar() {
-      const calendar = document.getElementById('calendar');
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = now.getMonth();
-      const todayDate = now.getDate();
-      const firstDay = new Date(year, month, 1).getDay();
-      const lastDate = new Date(year, month + 1, 0).getDate();
-      const days = ['일','월','화','수','목','금','토'];
-      let html = `<div class="cal-header">${year}년 ${month + 1}월</div><table><thead><tr>`;
-      days.forEach(d => (html += `<th>${d}</th>`));
-      html += '</tr></thead><tbody><tr>';
-      for (let i = 0; i < firstDay; i++) html += '<td></td>';
-      for (let date = 1; date <= lastDate; date++) {
-        const dow = (firstDay + date - 1) % 7;
-        html += `<td class="${date === todayDate ? 'today' : ''}">${date}</td>`;
-        if (dow === 6 && date !== lastDate) html += '</tr><tr>';
-      }
-      html += '</tr></tbody></table>';
-      calendar.innerHTML = html;
-    }
-    renderCalendar();
-    // 예약 로직
-    const TODAY = new Date().toISOString().split('T')[0];
-    document.getElementById('date').value = TODAY;
-    const initialStock = {
-      '11:00~11:30': { '비빔밥': 20, '된장찌개': 20, '카레라이스': 20 },
-      '11:30~12:00': { '비빔밥': 20, '된장찌개': 20, '카레라이스': 20 },
-      '12:00~12:30': { '비빔밥': 20, '된장찌개': 20, '카레라이스': 20 },
-      '12:30~13:00': { '비빔밥': 20, '된장찌개': 20, '카레라이스': 20 }
-    };
-    const timeslot = document.getElementById('timeslot');
-    const menu = document.getElementById('menu');
-    const stockDiv = document.getElementById('menuStock');
-    function keyOf(slot, item) {
-      return `${TODAY}__${slot}__${item}`;
-    }
-    function reservedCount(key) {
-      return Number(localStorage.getItem(key) || 0);
-    }
-    function renderStock() {
-      const slot = timeslot.value;
-      stockDiv.innerHTML = Object.entries(initialStock[slot])
-        .map(([item, cnt]) => {
-          const left = cnt - reservedCount(keyOf(slot, item));
-          return `<strong>${item}</strong>: ${left}개 남음`;
-        })
-        .join('<br>');
-    }
-    timeslot.addEventListener('change', renderStock);
-    menu.addEventListener('change', renderStock);
-    renderStock();
-    // 결제 및 자동 예약
-    const toss = TossPayments('test_ck_GePWvyJnrKKGbgeMkzx1rgLzN97E');
-    document.getElementById('payBtn').addEventListener('click', () => {
-      toss.requestPayment('카드', {
-        amount: 1000,
-        orderId: 'order_' + Date.now(),
-        orderName: `${timeslot.value} ${menu.value} 예약`,
-        customerName: '홍길동',
-        successUrl: location.href + '?payment=success',
-        failUrl: location.href + '?payment=fail'
-      });
-    });
-    // 자동 예약 처리
-    const params = new URLSearchParams(location.search);
-    if (params.get('payment') === 'success') {
-      alert('테스트 결제가 성공했습니다! 자동 예약 및 QR 발급 중...');
-      const slotVal = timeslot.value;
-      const menuVal = menu.value;
-      const k = keyOf(slotVal, menuVal);
-      localStorage.setItem(k, reservedCount(k) + 1);
-      document.getElementById('qrcode').innerHTML = '';
-      new QRCode(document.getElementById('qrcode'), {
-        text: `${TODAY}|${slotVal}|${menuVal}`,
-        width: 200,
-        height: 200
-      });
-      renderStock();
-      history.replaceState(null, '', location.pathname);
-    }
-  </script>
 </body>
 </html>
